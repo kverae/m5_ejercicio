@@ -7,7 +7,8 @@ const schema = new mongoose.Schema({
     },
     email: {
         type: String,
-        unique: true
+        unique: true,
+        match: [/.+\@.+\..+/, 'Por favor ingrese un correo válido'] // <- Validación regexp para correo
     },
     bio: {
         type: String,
@@ -17,8 +18,9 @@ const schema = new mongoose.Schema({
         type: String,
         require: true
     },
-    avatar: {
-        type: String
+    active: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true,

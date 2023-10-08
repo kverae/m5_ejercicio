@@ -5,6 +5,11 @@ require("./config/db.config")
 
 app.use(express.json())
 
+app.use((req, res, next) => {
+    console.log("Request received, ", req.method, req.path)
+    next()
+})
+
 const router = require("./config/router.config")
 app.use(router)
 
