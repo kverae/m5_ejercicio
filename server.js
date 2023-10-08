@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const hostname = 'localhost';
-const port = 8080;
+const port = 8000;
 
 const Ajv = require("ajv")
 const ajv = new Ajv()
