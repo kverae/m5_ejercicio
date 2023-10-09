@@ -2,6 +2,9 @@ const Post = require("../models/post.model")
 
 module.exports.create = (req, res) => {
     console.log("body: " + JSON.stringify(req.body))
+    console.log("file: " + JSON.stringify(req.file))
+    req.body.author = req.user
+    req.body.image = req.file.path
     Post.create(req.body)
         .then((post) => {
             res.status(201).json(post)
@@ -18,7 +21,9 @@ module.exports.list = (req, res) => {
     if(req.query.author){
         criteria.author = new RegExp(req.query.author, "i")
     }
-    Post.find(criteria).then((posts) => {
+    Post.find(criteria)
+    .populate("author") // carga los registro de user en author, no solo el id
+    .then((posts) => {
         res.json(posts)
     })
 }

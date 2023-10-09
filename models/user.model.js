@@ -25,6 +25,7 @@ const schema = new mongoose.Schema({
 }, {
     timestamps: true,
     toJSON: {
+        virtuals: true,
         transform: (doc, ret) => {
             ret.id = doc._id
             delete ret._id
@@ -33,6 +34,12 @@ const schema = new mongoose.Schema({
             return ret
         }
     }
+})
+
+schema.virtual("posts", {
+    ref: "Post",
+    localField: "_id",
+    foreignField: "author"
 })
 
 const User = mongoose.model("User", schema)

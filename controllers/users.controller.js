@@ -42,12 +42,31 @@ module.exports.create = (req, res) => {
     
 }
 
+module.exports.activate = (req, res) => {
+    User.findByIdAndUpdate(req.query.key, {active: true}, { 
+        new: true, runValidators: true
+    })
+    .then(user => {
+        if(user)
+            res.status(200).json({message: "User successfully verified"})
+        else
+            res.status(404).json({message: "User not verify"})
+    })
+    .catch(() => {
+        res.status(400).json({
+            message: "Error verifying user"
+        })
+    })
+}
+
 module.exports.list = (req, res) => {
     const criteria = {}
     if(req.query.name){
         criteria.name = new RegExp(req.query.name, "i")
     }
-    User.find(criteria).then((users) => {
+    User.find(criteria)
+    .populate("posts")
+    .then((users) => {
         res.json(users)
     })
 }

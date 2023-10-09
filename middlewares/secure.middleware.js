@@ -4,7 +4,8 @@ module.exports.checkAuth = (req, res, next) => {
     try {
         const authorization = req.headers.authorization
         const token = authorization.split("Bearer ")[1] // Bearer xxxx
-        jwt.verify(token, "super-secret")
+        const decoded = jwt.verify(token, "super-secret")
+        req.user = decoded.sub
         next()
     } catch(err){
         console.error(err)

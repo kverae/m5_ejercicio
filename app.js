@@ -4,6 +4,7 @@ const app = express()
 require("./config/db.config")
 
 app.use(express.json())
+app.use(express.urlencoded({extended: false}))
 
 app.use((req, res, next) => {
     console.log("Request received, ", req.method, req.path)

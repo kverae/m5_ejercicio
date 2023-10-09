@@ -11,8 +11,13 @@ const schema = new mongoose.Schema({
         require: true,
         minlength: 5
     },
-    author: {
+    image: {
         type: String,
+        require: true
+    },
+    author: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
         require: true
     }
 }, {
